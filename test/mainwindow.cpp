@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <vector>
+
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -165,10 +168,10 @@ void MainWindow::getGPA()
     QList<QString> gradeCharArray;
 
     // holds the double value of each course box's grade
-    QVector<double> gradeArray;
+    vector<double> gradeArray;
 
     // holds the int value of each course box's credit hours
-    QVector<int> hoursArray;
+    vector<int> hoursArray;
 
     // holds the sum of all credit hours
     double totalHours = 0;
@@ -207,7 +210,7 @@ void MainWindow::getGPA()
 
     // cycle through the list of hour ComboBoxes and add their int values to an array (WORKS)
     foreach( QComboBox* hour, hours )  {
-        hoursArray << hour -> currentText().toInt();
+        hoursArray.push_back(hour -> currentText().toInt());
     }
 
 
@@ -223,14 +226,17 @@ void MainWindow::getGPA()
 
     //--------------------- multiply values in each vector (get total grade points) ------------------------
 
-    QVectorIterator<int> hoursIterator(hoursArray);
-    QVectorIterator<double> gradesIterator(gradeArray);
+
+    for(int i = 0; i < gradeArray.size(); i++)
+    {
+        totalGradePoints += gradeArray[i] * hoursArray[i];
+    }
 
 
 
     //--------------------------------- compute GPA and output to the screen -------------------------------
 
-    //ui -> GPA -> setText(QString::number( totalGradePoints/totalHours ));
+    ui -> GPA -> setText(QString::number( totalGradePoints/totalHours ));
 }
 
 
