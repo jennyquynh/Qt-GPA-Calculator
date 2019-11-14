@@ -101,57 +101,66 @@ MainWindow::~MainWindow()
 //*************************************************** ADD A COURSE BOX **************************************************************
 void MainWindow::addCourse()
 {
+    // get the number of rows in the gridLayout, whether they are "dead" or not
+    int rowCount = ui -> gridLayout -> rowCount();
 
-    // a box to hold all our elements in
-    QGroupBox *courseGroup = new QGroupBox();
+    // subtract the total number of rows by the number of "dead rows" (which is tracked by the firstRow variable)
+    // in order to get the total number of valid rows. If this row more than 9, then we don't want to add anymore courses.
+    if((rowCount - firstRow) < 9)
+    {
 
-
-    // course name field
-    QLabel *courseLabel = new QLabel(tr("Course: "));
-    QLineEdit *courseName = new QLineEdit;
-    courseName->setPlaceholderText("Enter course name");
-
-
-    // credit hours drop down
-    QLabel *hoursLabel = new QLabel(tr("Credit Hours: "));
-    QComboBox *hoursComboBox = new QComboBox;
-    hoursComboBox -> addItem(tr("1"));
-    hoursComboBox -> addItem(tr("2"));
-    hoursComboBox -> addItem(tr("3"));
-    hoursComboBox -> addItem(tr("4"));
-    hoursComboBox -> addItem(tr("5"));
+        // a box to hold all our elements in
+        QGroupBox *courseGroup = new QGroupBox();
 
 
-    // grade drop down
-    QLabel *gradeLabel = new QLabel(tr("Grade: "));
-    QComboBox *gradeComboBox = new QComboBox;
-    gradeComboBox -> addItem(tr("A"));
-    gradeComboBox -> addItem(tr("B"));
-    gradeComboBox -> addItem(tr("C"));
-    gradeComboBox -> addItem(tr("D"));
-    gradeComboBox -> addItem(tr("F"));
+        // course name field
+        QLabel *courseLabel = new QLabel(tr("Course: "));
+        QLineEdit *courseName = new QLineEdit;
+        courseName->setPlaceholderText("Enter course name");
 
 
-    // add the grade dropdown element to a QList that holds QComboBoxes
-    grades << gradeComboBox;
-
-    // add the hours dropdown element to a QList that holds QComboBoxes
-    hours << hoursComboBox;
-
-
-    // formatting the group box to be horizontally layed out
-    QGridLayout *courseLayout = new QGridLayout;
-    courseLayout -> addWidget(courseLabel, 0, 0);
-    courseLayout -> addWidget(courseName, 0, 1);
-    courseLayout -> addWidget(hoursLabel, 0, 2);
-    courseLayout -> addWidget(hoursComboBox, 0, 3);
-    courseLayout -> addWidget(gradeLabel, 0, 4);
-    courseLayout -> addWidget(gradeComboBox, 0, 5);
-    courseGroup -> setLayout(courseLayout);
+        // credit hours drop down
+        QLabel *hoursLabel = new QLabel(tr("Credit Hours: "));
+        QComboBox *hoursComboBox = new QComboBox;
+        hoursComboBox -> addItem(tr("1"));
+        hoursComboBox -> addItem(tr("2"));
+        hoursComboBox -> addItem(tr("3"));
+        hoursComboBox -> addItem(tr("4"));
+        hoursComboBox -> addItem(tr("5"));
 
 
-    // add the group box to the window
-    ui -> gridLayout -> addWidget(courseGroup);
+        // grade drop down
+        QLabel *gradeLabel = new QLabel(tr("Grade: "));
+        QComboBox *gradeComboBox = new QComboBox;
+        gradeComboBox -> addItem(tr("A"));
+        gradeComboBox -> addItem(tr("B"));
+        gradeComboBox -> addItem(tr("C"));
+        gradeComboBox -> addItem(tr("D"));
+        gradeComboBox -> addItem(tr("F"));
+
+
+        // add the grade dropdown element to a QList that holds QComboBoxes
+        grades << gradeComboBox;
+
+        // add the hours dropdown element to a QList that holds QComboBoxes
+        hours << hoursComboBox;
+
+
+        // formatting the group box to be horizontally layed out
+        QGridLayout *courseLayout = new QGridLayout;
+        courseLayout -> addWidget(courseLabel, 0, 0);
+        courseLayout -> addWidget(courseName, 0, 1);
+        courseLayout -> addWidget(hoursLabel, 0, 2);
+        courseLayout -> addWidget(hoursComboBox, 0, 3);
+        courseLayout -> addWidget(gradeLabel, 0, 4);
+        courseLayout -> addWidget(gradeComboBox, 0, 5);
+        courseGroup -> setLayout(courseLayout);
+
+
+        // add the group box to the window
+        ui -> gridLayout -> addWidget(courseGroup);
+
+    }
 }
 
 
